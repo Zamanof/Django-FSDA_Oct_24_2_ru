@@ -74,6 +74,8 @@ _NOTES: list[dict[str, Any]] = [
     },
 ]
 
+_next_id: int = 11
+
 def list_notes()->list[dict[str: Any]]:
     return deepcopy(_NOTES)
 
@@ -83,3 +85,30 @@ def get_note(note_id: int) -> dict[str: Any]|None:
         if note["id"] == note_id:
             return deepcopy(note)
     return None
+
+def create_note(*, title:str, body:str, tag:str, category:str) -> dict[str: Any]:
+    global _next_id
+    note = {
+        "id": _next_id,
+        "title": title.strip(),
+        "body": body.strip(),
+        "tag": tag.strip(),
+        "category": category.strip(),
+    }
+
+    _NOTES.append(note)
+    _next_id += 1
+    return deepcopy(note)
+
+
+def delete_note(note_id: int) -> bool:
+    pass
+
+
+def edit_note(
+        note_id: int,
+        *,
+        title:str,
+        body:str,
+        tag:str, category:str) -> bool:
+    pass
