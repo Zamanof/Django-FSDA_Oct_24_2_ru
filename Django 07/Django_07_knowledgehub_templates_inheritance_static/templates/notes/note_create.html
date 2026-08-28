@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}
+	Create new note
+{% endblock %}
+
+{% block content %}
+	 <h1>✏️ Create Note</h1>
+
+        <p>
+            Add a new note to your Knowledge Hub.
+        </p>
+
+        {err}
+
+        <form method="post" action="">
+
+            {% csrf_token %}
+            <p>
+                <label>Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    value=""
+                    placeholder="Enter note title"
+                    required
+                >
+            </p>
+
+            <p>
+                <label>Text</label>
+                <textarea
+                    name="content"
+                    rows="6"
+                    placeholder="Write your note..."
+                ></textarea>
+            </p>
+
+            <p>
+                <label>Tags</label>
+                <input
+                    type="text"
+                    name="tag"
+                    value=""
+                    placeholder="Example: django"
+                >
+            </p>
+
+            <p>
+                <label>Category</label>
+                <input
+                    type="text"
+                    name="category"
+                    value=""
+                    placeholder="Example: backend"
+                >
+            </p>
+
+            <p>
+                <button type="submit">
+                    Save Note
+                </button>
+            </p>
+
+        </form>
+
+        <div class="actions">
+            <a href="{% url 'notes_list' %}">
+                ← Cancel and return to Notes
+            </a>
+        </div>
+
+{% endblock %}

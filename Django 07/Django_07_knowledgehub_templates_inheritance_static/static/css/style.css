@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        * {
+* {
             box-sizing: border-box;
         }
 
@@ -112,73 +106,42 @@
             background: #f8f9fa;
             border-radius: 8px;
         }
-    </style>
-</head>
-<body>
-<div class="container">
-        <h1>📝 Knowledge Hub Notes</h1>
-    {% with total=notes|length %}
-        <p>. Total notes: {{ total }}</p>
-    {% endwith %}
 
-    <div class="actions">
-        <a class="button"
-           href="{% url 'note_create' %}">
-            + Create Note
-        </a>
-    </div>
+        header {
+    width: 100%;
+}
 
-    <ul class="notes">
-        {% for note in notes %}
-            <li>
-                <a href="{% url 'note_detail' note.id %}">{{ note.title }}</a>
+.nav {
+    background-color: #1f2937;
+    padding: 0 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
 
-                {% if note.category %}
-                    <br>
-                    <small>
-                        Category: {{ note.category }}
-                    </small>
-                {% else %}
-                    <br>
-                    <small>
-                        Category not set
-                    </small>
-                {% endif %}
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-                {% if note.tags %}
-                    <br>
-                    <small>
-                        Tags: {{ note.tags|join:", " }}
-                    </small>
-                {% else %}
-                    <br>
-                    <small>
-                        Tag not set
-                    </small>
-                {% endif %}
-            </li>
-            {% empty %}
-            <h1>No notes yet</h1>
-        {% endfor %}
-    </ul>
+.nav-inner a {
+    display: block;
+    padding: 16px 20px;
 
-    <div class="actions">
-        <a href="{% url 'home' %}">
-            ← Return to Home
-        </a>
-    </div>
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
 
-</div>
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
 
-</body>
-</html>
+.nav-inner a:hover {
+    background-color: #374151;
+}
 
-
-{% comment %}
-    {% for %}{% endfor %}
-    {% if %}{% elif %}{% else %}{% endif %}
-    {% url %}
-    {% with %}
-    {% empty %}
-    {% include %}
-{% endcomment %}
+.nav-inner a:active {
+    background-color: #4b5563;
+}

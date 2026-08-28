@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>📚 Knowledge Hub</h1>
+        <p>
+            Welcome to Knowledge Hub.
+            Here you can create and manage your notes.
+        </p>
+
+        <div class="actions">
+            <a class="button" href="{% url 'notes_list' %}">
+                View Notes
+            </a>
+
+            <a class="button" href="{% url 'note_create' %}">
+                Create Note
+            </a>
+        </div>
+{% endblock %}
+

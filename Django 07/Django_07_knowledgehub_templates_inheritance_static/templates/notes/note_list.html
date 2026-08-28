@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}
+	List of notes
+{% endblock %}
+
+{% block content %}
+
+        <h1>📝 Knowledge Hub Notes</h1>
+    {% with total=notes|length %}
+        <p class="muted">Total notes: {{ total }}</p>
+    {% endwith %}
+
+    <div class="actions">
+        <a class="button"
+           href="{% url 'note_create' %}">
+            + Create Note
+        </a>
+    </div>
+
+    <ul class="notes">
+        {% for note in notes %}
+            <li>
+                <a href="{% url 'note_detail' note.id %}">{{ note.title }}</a>
+
+                {% if note.category %}
+                    <br>
+                    <small>
+                        Category: {{ note.category }}
+                    </small>
+                {% else %}
+                    <br>
+                    <small>
+                        Category not set
+                    </small>
+                {% endif %}
+
+                {% if note.tags %}
+                    <br>
+                    <small>
+                        Tags: {{ note.tags|join:", " }}
+                    </small>
+                {% else %}
+                    <br>
+                    <small>
+                        Tag not set
+                    </small>
+                {% endif %}
+            </li>
+            {% empty %}
+            <h1>No notes yet</h1>
+        {% endfor %}
+    </ul>
+
+    <div class="actions">
+        <a href="{% url 'home' %}">
+            ← Return to Home
+        </a>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% comment %}
+    {% for %}{% endfor %}
+    {% if %}{% elif %}{% else %}{% endif %}
+    {% url %}
+    {% with %}
+    {% empty %}
+    {% include %}
+{% endcomment %}
