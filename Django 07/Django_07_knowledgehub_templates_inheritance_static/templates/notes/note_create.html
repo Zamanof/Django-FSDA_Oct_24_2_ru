@@ -4,15 +4,19 @@
 {% endblock %}
 
 {% block content %}
-	 <h1>✏️ Create Note</h1>
+	<h1>✏️ Create Note</h1>
 
         <p>
             Add a new note to your Knowledge Hub.
         </p>
 
-        {err}
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
 
-        <form method="post" action="">
+        <form method="post" action="{% url 'note_create' %}">
 
             {% csrf_token %}
             <p>
@@ -20,7 +24,7 @@
                 <input
                     type="text"
                     name="title"
-                    value=""
+                    value="{{ title }}"
                     placeholder="Enter note title"
                     required
                 >
@@ -32,16 +36,16 @@
                     name="content"
                     rows="6"
                     placeholder="Write your note..."
-                ></textarea>
+                >{{ content }}</textarea>
             </p>
 
             <p>
                 <label>Tags</label>
                 <input
                     type="text"
-                    name="tag"
-                    value=""
-                    placeholder="Example: django"
+                    name="tags"
+                    value="{{ tags }}"
+                    placeholder="Example: django python"
                 >
             </p>
 
@@ -50,7 +54,7 @@
                 <input
                     type="text"
                     name="category"
-                    value=""
+                    value="{{ category }}"
                     placeholder="Example: backend"
                 >
             </p>

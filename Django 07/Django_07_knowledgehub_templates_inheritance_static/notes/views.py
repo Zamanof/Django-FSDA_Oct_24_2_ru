@@ -197,38 +197,38 @@ def note_detail(
 
 
 def note_create(request: HttpRequest) -> HttpResponse:
-    err = ""
+    error = ""
+    title = ""
+    content = ""
+    tags = ""
+    category = ""
 
     if request.method == "POST":
-
         title = request.POST.get("title", "")
-        content = request.POST.get("body", "")
+        content = request.POST.get("content", "")
         tags = request.POST.get("tags", "")
         category = request.POST.get("category", "")
 
         if not title.strip():
-            err = """
-                <div class="error">
-                    Title cannot be empty.
-                </div>
-            """
-
+            error = "Title cannot be empty."
         else:
             data.create_note(
                 title=title.strip(),
                 content=content.strip(),
-                tags= tags.split() or "misc",
-                category=category.strip() or "general"
+                tags=tags.split() or ["misc"],
+                category=category.strip() or "general",
             )
+            # PRG -> Post / Redirect / Get
             return redirect("notes_list")
 
-    else:
-        title = ""
-        body = ""
-        tag = ""
-        category = ""
-
-    return render(request, "notes/note_create.html")
+    context = {
+        "error": error,
+        "title": title,
+        "content": content,
+        "tags": tags,
+        "category": category,
+    }
+    return render(request, "notes/note_create.html", context)
 
 
 def note_delete(request: HttpRequest, note_id:int) -> HttpResponse:

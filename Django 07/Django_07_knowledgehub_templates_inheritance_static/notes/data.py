@@ -105,13 +105,13 @@ def get_note(note_id: int) -> dict[str: Any]|None:
             return deepcopy(note)
     return None
 
-def create_note(*, title:str, content:str, tags:str, category:str) -> dict[str: Any]:
+def create_note(*, title:str, content:str, tags:list[str], category:str) -> dict[str: Any]:
     global _next_id
     note = {
         "id": _next_id,
         "title": title.strip(),
         "content": content.strip(),
-        "tags": tags.strip(),
+        "tags": tags,
         "category": category.strip(),
         "created_at": datetime.now()
     }
