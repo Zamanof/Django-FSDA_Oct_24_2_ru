@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Knowledge hub: {{ note.title }}
+{% endblock %}
+
+{% block content %}
+	{% if note %}
+            <h1>{{ note.title|upper }}</h1>
+
+        <div class="note-body">
+            {{ note.content|truncatechars:200 }}
+        </div>
+
+        <p>
+            <strong>Tag:</strong>
+            {{ note.tags|join:", " }}
+        </p>
+
+        <p>
+            <strong>Category:</strong>
+            {{ note.category }}
+        </p>
+        <p>
+            <strong>Created at:</strong>
+            {{ note.created_at|date:'d F Y' }}
+        </p>
+
+        <div class="actions">
+            <a href="{% url 'notes_list' %}">
+                ← Return to Notes
+            </a>
+        </div>
+        {% else %}
+        <h1>❌ Note not found</h1>
+
+            <p>
+                Note with ID {{ note.id }} does not exist.
+            </p>
+
+            <a href="{% url 'notes_list' %}">
+                ← Return to Notes
+            </a>
+
+{% endif %}
+{% endblock %}
+
+
+
+
+{% comment %}
+	Template filters:
+	    upper
+	    title
+	    lower
+	    default
+	    length
+	    date
+	    truncatechars
+	    safe
+	    first
+	    last
+	    join
+{% endcomment %}

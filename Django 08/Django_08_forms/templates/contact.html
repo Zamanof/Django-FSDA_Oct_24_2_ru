@@ -1,0 +1,21 @@
+<h1>Contact form</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+
+{#    {{form.as_div}}#}
+
+{#    <ul>#}
+{#       {{form.as_ul}}#}
+{#    </ul>#}
+
+{#    <table>#}
+{#        {{ form.as_table }}#}
+{#    </table>#}
+
+{#    <p>#}
+{#        {{ form.name.label_tag }} {{ form.name }}#}
+{#    </p>#}
+    <button type='submit'>Send</button>
+</form>

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+    Create new note
+{% endblock %}
+
+{% block content %}
+    <h1>✏️ Create Note</h1>
+
+    <p>
+        Add a new note to your Knowledge Hub.
+    </p>
+
+    <form method="post">
+
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {{ form.as_p }}
+        <p>
+            <button type="submit">
+                Save Note
+            </button>
+        </p>
+    </form>
+    <div class="actions">
+        <a href="{% url 'notes_list' %}">
+            ← Cancel and return to Notes
+        </a>
+    </div>
+
+{% endblock %}

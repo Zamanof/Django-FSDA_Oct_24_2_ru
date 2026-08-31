@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .form-control{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Note form</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send</button>
+    <br>
+    {% if data %}
+    	{% for key, value in data.items %}
+    		<p>{{ key }}: {{ value }}</p>
+    	{% endfor %}
+        {% else %}
+            <p></p>
+    {% endif %}
+</form>
+</body>
+</html>
+
