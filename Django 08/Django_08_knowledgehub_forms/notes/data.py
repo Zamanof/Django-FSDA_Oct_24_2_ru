@@ -122,13 +122,25 @@ def create_note(*, title:str, content:str, tags:list[str], category:str) -> dict
 
 
 def delete_note(note_id: int) -> bool:
-    pass
+    global _NOTES
+    before = len(_NOTES)
+    _NOTES = [n for n in _NOTES if n["id"] != note_id]
+    return len(_NOTES) != before
 
 
 def edit_note(
         note_id: int,
         *,
         title:str,
-        body:str,
-        tag:str, category:str) -> bool:
-    pass
+        content:str,
+        tags:list['str'],
+        category:str) -> dict[str: Any]|None:
+    for note in _NOTES:
+        if note["id"] == note_id:
+            note["title"] = title.strip()
+            note["content"] = content.strip()
+            note["tags"] = ' '.join(tags)
+            note["category"] = category.strip()
+            return deepcopy(note)
+    return None
+

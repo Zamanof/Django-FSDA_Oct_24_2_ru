@@ -6,4 +6,5 @@ urlpatterns = [
     path('', notes_views.home, name='home'),
     path('about/', notes_views.about, name='about'),
     path('notes/', include('notes.urls')),
+    path('accounts/', include('accounts.urls')),
 ]

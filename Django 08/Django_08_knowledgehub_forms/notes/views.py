@@ -7,7 +7,6 @@ from django.utils.html import escape
 from . import data
 from .forms import NoteForm
 
-
 def home(request: HttpRequest) -> HttpResponse:
     return render(request, "notes/home.html")
 
@@ -50,8 +49,7 @@ def note_detail(
 ) -> HttpResponse:
 
     note = data.get_note(note_id)
-    print(note)
-    return render(request, "notes/note_detail.html", {'note': note})
+    return render(request, "notes/note_detail.html", {'note_id':note_id, 'note': note})
 
 
 def note_create(request: HttpRequest) -> HttpResponse:
@@ -81,8 +79,38 @@ def note_create(request: HttpRequest) -> HttpResponse:
 
 
 def note_delete(request: HttpRequest, note_id:int) -> HttpResponse:
-    pass
+    note = data.get_note(note_id)
+    if request.method == "POST":
+        data.delete_note(note_id)
+        return redirect("notes_list")
+    return render(request, "notes/note_delete.html", {'note': note})
 
 
 def note_edit(request: HttpRequest, note_id:int) -> HttpResponse:
-    pass
+    note = data.get_note(note_id)
+    if request.method == "POST":
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            tags = form.cleaned_data["tags"]
+            category = form.cleaned_data["category"]
+            data.edit_note(
+                note_id,
+                title=title,
+                content=content,
+                tags=tags.split(),
+                category=category)
+            return redirect("notes_list")
+    else:
+        form = NoteForm(initial=
+                        {
+                            'title': note["title"],
+                            'content': note["content"],
+                            'tags': ' '.join(note["tags"]),
+                            'category': note["category"]
+                        })
+    return render(request, "notes/note_edit.html", {
+        "note":note,
+        "note_id":note_id,
+        'form': form})

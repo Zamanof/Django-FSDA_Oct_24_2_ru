@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}
+	Success
+{% endblock %}
+
+{% block content %}
+	<h1>Register is Success</h1>
+    <p>User {{ username }} registered</p>
+    <p><a href="{% url 'accounts:login' %}">Get to Login page</a></p>
+    <p><a href="{% url 'home' %}">Return to home page</a></p>
+
+
+{% endblock %}

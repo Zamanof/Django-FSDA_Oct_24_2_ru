@@ -25,9 +25,18 @@
             <strong>Created at:</strong>
             {{ note.created_at|date:'d F Y' }}
         </p>
+         <p>
+                <a href="{% url 'notes:note_edit' note_id %}">
+                    Edit
+                </a>
+
+                <a href="{% url 'notes:note_delete' note_id %}">
+                    Delete
+                </a>
+            </p>
 
         <div class="actions">
-            <a href="{% url 'notes_list' %}">
+            <a href="{% url 'notes:notes_list' %}">
                 ← Return to Notes
             </a>
         </div>
@@ -38,7 +47,7 @@
                 Note with ID {{ note.id }} does not exist.
             </p>
 
-            <a href="{% url 'notes_list' %}">
+            <a href="{% url 'notes:notes_list' %}">
                 ← Return to Notes
             </a>
 
