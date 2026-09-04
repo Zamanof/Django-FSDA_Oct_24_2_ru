@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    Delete note
+{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-3">Delete note</h1>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes, delete</button>
+                <div class="mt-3">
+                    <a href="{% url 'notes:notes_list' %}" class="link-secondary text-decoration-none">
+                        ← Cancel and return to Notes
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

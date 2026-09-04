@@ -6,22 +6,23 @@ class RegisterForm(forms.Form):
         label="Username",
         min_length=3,
         max_length=50,
-        widget=forms.TextInput(attrs={'placeholder': 'Username here'}),
+        widget=forms.TextInput(attrs={'placeholder': 'Username here', 'class': 'form-control'}),
     )
     email = forms.EmailField(label="Email",
-                             widget=forms.TextInput(attrs={'placeholder': 'Email here'}),)
+                             widget=forms.TextInput(attrs={'placeholder': 'Email here', 'class': 'form-control'}),)
     password = forms.CharField(
         label="Password",
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),)
+        widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),)
     confirm_password = forms.CharField(
         label="Confirm Password",
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}),
     )
 
     def clean_username(self):
         username = self.cleaned_data['username']
         if username.lower() in ['niga', 'niger', 'virus', 'spam']:
             raise forms.ValidationError('You cannot use forbidden words.')
+        return username
 
     def clean(self):
         cleaned_data = super().clean()
@@ -35,7 +36,7 @@ class RegisterForm(forms.Form):
 class LoginForm(forms.Form):
     username_or_mail = forms.CharField(
         label="Username or mail",
-        widget=forms.TextInput(attrs={'placeholder': 'Username or mail here'}),)
+        widget=forms.TextInput(attrs={'placeholder': 'Username or mail here', 'class': 'form-control'}),)
     password = forms.CharField(
         label="Password",
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),)
+        widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'}),)

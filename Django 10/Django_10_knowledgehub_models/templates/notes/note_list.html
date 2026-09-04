@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}
+	List of notes
+{% endblock %}
+
+{% block content %}
+
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-3">📝 Knowledge Hub Notes</h1>
+            {% with total=notes|length %}
+                <p class="text-muted">Total notes: {{ total }}</p>
+            {% endwith %}
+
+            <div class="mb-3">
+                <a class="btn btn-primary"
+                   href="{% url 'notes:note_create' %}">
+                    + Create Note
+                </a>
+            </div>
+
+            <ul class="list-group mb-4">
+                {% for note in notes %}
+                    <li class="list-group-item">
+                        <a href="{% url 'notes:note_detail' note.id %}">{{ note.title }}</a>
+
+                        {% if note.category %}
+                            <br>
+                            <small class="text-muted">
+                                Category: {{ note.category }}
+                            </small>
+                        {% else %}
+                            <br>
+                            <small class="text-muted">
+                                Category not set
+                            </small>
+                        {% endif %}
+
+                        {% with tags=note.tags.all %}
+                            {% if tags %}
+                                <br>
+                                <small class="text-muted">
+                                    Tags:
+                                    {% for tag in tags %}
+                                        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </small>
+                            {% else %}
+                                <br>
+                                <small class="text-muted">
+                                    Tag not set
+                                </small>
+                            {% endif %}
+                        {% endwith %}
+                    </li>
+                    {% empty %}
+                    <h1>No notes yet</h1>
+                {% endfor %}
+            </ul>
+
+            <div>
+                <a href="{% url 'home' %}" class="link-secondary text-decoration-none">
+                    ← Return to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% comment %}
+    {% for %}{% endfor %}
+    {% if %}{% elif %}{% else %}{% endif %}
+    {% url %}
+    {% with %}
+    {% empty %}
+    {% include %}
+{% endcomment %}
