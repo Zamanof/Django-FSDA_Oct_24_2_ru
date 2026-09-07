@@ -19,7 +19,10 @@ def about(request: HttpRequest):
 
 @login_required
 def notes_list(request: HttpRequest) -> HttpResponse:
-    notes = Note.objects.filter(author=request.user).order_by("-created_at")
+    if request.user.is_superuser:
+        notes = Note.objects.all()
+    else:
+        notes = Note.objects.filter(author=request.user).order_by("-created_at")
 
     return render(request, "notes/note_list.html", {'notes': notes})
 
@@ -31,7 +34,7 @@ def note_detail(
 
     note = get_object_or_404(
         Note.objects.select_related('author', 'category').prefetch_related('tags'), pk=note_id)
-    if note.author != request.user:
+    if note.author != request.user and not request.user.is_superuser:
         return HttpResponseForbidden(
             "You can only see this note on the author's account."
         )
@@ -56,7 +59,7 @@ def note_create(request: HttpRequest) -> HttpResponse:
 @login_required
 def note_delete(request: HttpRequest, note_id:int) -> HttpResponse:
     note = get_object_or_404(Note, pk=note_id)
-    if note.author != request.user:
+    if note.author != request.user and not request.user.is_superuser:
         return HttpResponseForbidden("Udalit mojet tolko avtor zametki")
     if request.method == "POST":
         note.delete()
@@ -68,7 +71,7 @@ def note_delete(request: HttpRequest, note_id:int) -> HttpResponse:
 def note_edit(request: HttpRequest, note_id:int) -> HttpResponse:
     note = get_object_or_404(Note, pk=note_id)
 
-    if note.author != request.user:
+    if note.author != request.user and not request.user.is_superuser:
         return  HttpResponseForbidden("Redaktirovat mojet tolko avtor zametki")
 
     if request.method == "POST":
