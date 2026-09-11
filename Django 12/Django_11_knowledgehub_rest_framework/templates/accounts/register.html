@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-4">Register</h1>
+            <form method="post">
+                {% csrf_token %}
+                {% include 'includes/bootstrap_form.html' %}
+                <p>
+                    <button type="submit" class="btn btn-primary">
+                        Register
+                    </button>
+                </p>
+            </form>
+            <p class="mb-0 mt-3">
+                <a href="{% url 'accounts:login' %}">Already have an account? Sign in</a>
+            </p>
+        </div>
+    </div>
+
+{% endblock %}
