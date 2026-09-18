@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Knowledge hub: {{ note.title }}
+{% endblock %}
+
+{% block content %}
+	{% if note %}
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-3">{{ note.title|upper }}</h1>
+
+                <div class="bg-light border rounded p-3 mb-3">
+                    {{ note.content|truncatechars:200 }}
+                </div>
+
+                <p>
+                    <strong>Tags:</strong>
+                    {% for tag in note.tags.all %}
+                        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        Tag not set
+                    {% endfor %}
+                </p>
+
+                <p>
+                    <strong>Category:</strong>
+                    {{ note.category }}
+                </p>
+                <p>
+                    <strong>Created at:</strong>
+                    {{ note.created_at|date:'d F Y' }}
+                </p>
+                <p class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'notes:note_edit' note.id %}" class="btn btn-outline-primary btn-sm">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'notes:note_delete' note.id %}" class="btn btn-outline-danger btn-sm">
+                        Delete
+                    </a>
+                </p>
+
+                <div class="mt-3">
+                    <a href="{% url 'notes:notes_list' %}" class="link-secondary text-decoration-none">
+                        ← Return to Notes
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3">❌ Note not found</h1>
+
+                <p>
+                    Note with ID {{ note.id }} does not exist.
+                </p>
+
+                <a href="{% url 'notes:notes_list' %}" class="link-secondary text-decoration-none">
+                    ← Return to Notes
+                </a>
+            </div>
+        </div>
+
+{% endif %}
+{% endblock %}
+
+
+
+
+{% comment %}
+	Template filters:
+	    upper
+	    title
+	    lower
+	    default
+	    length
+	    date
+	    truncatechars
+	    safe
+	    first
+	    last
+	    join
+{% endcomment %}

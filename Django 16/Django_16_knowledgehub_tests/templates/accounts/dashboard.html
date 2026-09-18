@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+	About Knowledge Hub
+{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-3">Dashboard</h1>
+            <h2 class="h5 mb-4">User: <strong>{{ active_user }}</strong></h2>
+            <ul class="list-group mb-4">
+                <li class="list-group-item">
+                    <a href="{% url 'notes:note_create' %}">Create note</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'notes:notes_list' %}">Note List</a>
+                </li>
+            </ul>
+            <p class="mb-0">
+                <a href="{% url 'home' %}" class="link-secondary text-decoration-none">Return to home page</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

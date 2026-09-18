@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}
+	Success
+{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-3">Register is Success</h1>
+            <p>User {{ username }} registered</p>
+            <p><a href="{% url 'accounts:login' %}">Get to Login page</a></p>
+            <p class="mb-0"><a href="{% url 'home' %}" class="link-secondary text-decoration-none">Return to home page</a></p>
+        </div>
+    </div>
+
+
+{% endblock %}
