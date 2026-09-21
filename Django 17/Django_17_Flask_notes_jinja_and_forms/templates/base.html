@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}FlaskNotes{% endblock %}</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+<body>
+    <div class="container archive-shell">
+    <header class="site-header d-flex flex-wrap justify-content-between align-items-center gap-3 py-3">
+    <a class="brand brand-link" href="{{ url_for('get_notes') }}">
+        <span class="brand-symbol" aria-hidden="true">fn.</span>
+        <span>FlaskNotes</span>
+    </a>
+
+    <nav class="archive-nav d-flex align-items-center gap-2" aria-label="Main navigation">
+        <a
+            href="{{ url_for('get_notes') }}"
+            class="archive-nav-link {{ 'is-active' if request.endpoint == 'get_notes' else '' }}"
+            {% if request.endpoint == 'get_notes' %}aria-current="page"{% endif %}
+        >
+            Notes List
+        </a>
+
+        <a
+            href="{{ url_for('create_note') }}"
+            class="archive-nav-create"
+            {% if request.endpoint == 'create_note' %}aria-current="page"{% endif %}
+        >
+            + Create
+        </a>
+    </nav>
+</header>
+        <main id="main-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="site-footer d-flex flex-wrap justify-content-between gap-2">
+            <span>FlaskNotes / Personal archive</span>
+            <span>Keep something worth remembering.</span>
+        </footer>
+    </div>
+</body>
+</html>

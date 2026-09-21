@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ note.title }} · FlaskNotes{% endblock %}
+
+{% block content %}
+<article class="note-detail">
+    <header class="detail-header">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <p class="micro-label mb-0">
+                Personal collection / Single entry
+            </p>
+
+            <span class="archive-stamp">
+                NOTE № {{ note.id }}
+            </span>
+        </div>
+
+        <h1 class="detail-title">{{ note.title }}</h1>
+
+        <div class="detail-rule" aria-hidden="true">
+            <span></span>
+            <span>✳</span>
+        </div>
+    </header>
+
+    <div class="row g-4 g-lg-5">
+        <aside class="col-lg-3">
+            <div class="margin-note">
+                <span class="micro-label">In the margins</span>
+                <p>A thought,<br>kept on paper.</p>
+
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                    <button
+                        class="btn archive-button"
+                        type="button"
+                        disabled
+                    >
+                        Edit ↗
+                    </button>
+
+                    <button
+                        class="btn archive-button archive-button-danger"
+                        type="button"
+                        disabled
+                    >
+                        Delete ×
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <div class="col-lg-9">
+            <div class="note-paper">
+                <div class="note-content">{{ note.content or "This page is still waiting for its first thought." }}</div>
+
+                <div class="end-mark" aria-hidden="true">■</div>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}

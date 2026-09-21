@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Notes · FlaskNotes{% endblock %}
+
+{% block content %}
+<section class="archive-intro">
+    <div class="row align-items-end g-4">
+        <div class="col-lg-8">
+            <p class="micro-label section-label">
+                Personal collection / Index
+            </p>
+
+            <h1 class="display-title">
+                Notes<span class="accent">.</span>
+            </h1>
+        </div>
+
+        <div class="col-lg-4">
+            <p class="intro-caption">
+                Small observations.<br>
+                Half-formed ideas.<br>
+                Things you don’t want to lose.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section aria-label="Notes collection">
+    <div class="collection-heading d-flex justify-content-between gap-3">
+        <span class="micro-label">The collection</span>
+        <span class="micro-label">Open a note ↘</span>
+    </div>
+
+    <ol class="notes-list">
+        {% for note in notes %}
+        <li>
+            <a
+                class="note-row"
+                href="{{ url_for('note_detail', note_id=note.id) }}"
+            >
+                <span class="note-number">
+                    {{ "%02d"|format(loop.index) }}
+                </span>
+
+                <div class="note-summary">
+                    <h2>{{ note.title }}</h2>
+
+                    <p>
+                        {{ (note.content or "An empty page. A little room for thought.")
+                           |truncate(145) }}
+                    </p>
+                </div>
+
+                <span class="note-arrow" aria-hidden="true">↗</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="empty-state">
+            <span class="empty-symbol" aria-hidden="true">✳</span>
+
+            <h2>Every archive starts<br>with one thought.</h2>
+
+            <p>No notes yet. Create your first note to begin.</p>
+        </li>
+        {% endfor %}
+    </ol>
+</section>
+{% endblock %}
