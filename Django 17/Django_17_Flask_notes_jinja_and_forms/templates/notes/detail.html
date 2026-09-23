@@ -30,21 +30,21 @@
                 <p>A thought,<br>kept on paper.</p>
 
                 <div class="d-flex flex-wrap gap-2 mt-4">
-                    <button
+                    <a
                         class="btn archive-button"
-                        type="button"
-                        disabled
+                        href="{{ url_for('edit_note', note_id=note.id) }}"
+
                     >
                         Edit ↗
-                    </button>
+                    </a>
 
-                    <button
+                    <a
                         class="btn archive-button archive-button-danger"
-                        type="button"
-                        disabled
+                         href="{{ url_for('delete_note', note_id=note.id) }}"
+
                     >
                         Delete ×
-                    </button>
+                    </a>
                 </div>
             </div>
         </aside>

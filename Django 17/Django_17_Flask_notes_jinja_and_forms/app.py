@@ -86,6 +86,34 @@ def create_note():
 
 
 
+@app.route("/notes/<int:note_id>/edit", methods=["GET","POST"])
+def edit_note(note_id: int):
+    note = _notes.get(note_id)
+    if note is None:
+        flash("Note not found", "error")
+        return redirect(url_for("get_notes"))
+
+    form = NoteForm(data={"title": note["title"], "content": note["content"]})
+    if form.validate_on_submit():
+        note["title"] = form.title.data.strip()
+        note["content"] = form.content.data.strip()
+        flash("Note updated", "success")
+        return redirect(url_for("note_detail", note_id=note["id"]))
+    return render_template("notes/form.html", form=form, note=note)
+
+
+@app.route("/notes/<int:note_id>/delete", methods=["GET","POST"])
+def delete_note(note_id: int):
+    note = _notes.get(note_id)
+    if note is None:
+        flash("Note not found", "error")
+        return redirect(url_for("get_notes"))
+    if request.method == "POST":
+        del _notes[note_id]
+        flash("Note deleted", "success")
+        return redirect(url_for("get_notes"))
+    return render_template('notes/confirm_delete.html', note=note)
+
 
 
 @app.get("/api/notes")
