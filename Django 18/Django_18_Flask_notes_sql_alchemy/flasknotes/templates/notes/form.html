@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ 'Edit note' if mode == 'edit' else 'New note' }} · FlaskNotes
+{% endblock %}
+
+{% block content %}
+<section class="note-detail">
+    <header class="detail-header">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <p class="micro-label mb-0">
+                Personal collection / {{ 'Revision' if mode == 'edit' else 'New entry' }}
+            </p>
+
+            <span class="archive-stamp">
+                {{ 'EDITING' if mode == 'edit' else 'DRAFT' }}
+            </span>
+        </div>
+
+        <h1 class="detail-title">
+            {{ 'A second thought' if mode == 'edit' else 'Start a thought' }}<span class="accent">.</span>
+        </h1>
+
+        <div class="detail-rule" aria-hidden="true">
+            <span></span>
+            <span>✳</span>
+        </div>
+    </header>
+
+    <div class="row g-4 g-lg-5">
+        <aside class="col-lg-3">
+            <div class="margin-note">
+                <span class="micro-label">
+                    {{ 'Make it clearer' if mode == 'edit' else 'A blank page' }}
+                </span>
+
+                <p>
+                    {% if mode == 'edit' %}
+                        Good ideas deserve<br>a little rewriting.
+                    {% else %}
+                        It doesn’t have to<br>be perfect. Just begin.
+                    {% endif %}
+                </p>
+
+                <a class="editor-back" href="{{ url_for('notes.get_notes') }}">
+                    ← Back to collection
+                </a>
+            </div>
+        </aside>
+
+        <div class="col-lg-9">
+            <div class="note-paper editor-paper">
+                <form method="post" class="archive-form">
+                    {{ form.csrf_token }}
+
+                    {% for error in form.csrf_token.errors %}
+                        <p class="field-error" role="alert">{{ error }}</p>
+                    {% endfor %}
+
+                    <div class="editor-field">
+                        <div class="field-heading">
+                            {{ form.title.label(class_="micro-label") }}
+                            <span class="field-index" aria-hidden="true">01</span>
+                        </div>
+
+                        {{ form.title(
+                            class_="form-control editor-title"
+                                ~ (" is-invalid" if form.title.errors else ""),
+                            placeholder="Give this thought a name…",
+                            aria_invalid="true" if form.title.errors else "false",
+                            aria_describedby="title-errors"
+                        ) }}
+
+                        <div id="title-errors">
+                            {% for error in form.title.errors %}
+                                <p class="field-error" role="alert">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="editor-field">
+                        <div class="field-heading">
+                            {{ form.content.label(class_="micro-label") }}
+                            <span class="field-index" aria-hidden="true">02</span>
+                        </div>
+
+                        {{ form.content(
+                            class_="form-control editor-content"
+                                ~ (" is-invalid" if form.content.errors else ""),
+                            rows=10,
+                            placeholder="An idea, an observation, something worth keeping.",
+                            aria_invalid="true" if form.content.errors else "false",
+                            aria_describedby="content-errors"
+                        ) }}
+
+                        <div id="content-errors">
+                            {% for error in form.content.errors %}
+                                <p class="field-error" role="alert">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="editor-actions d-flex flex-wrap align-items-center gap-3">
+                        {{ form.submit(
+                            class_="btn editor-save",
+                            value="Save changes ↗" if mode == "edit" else "Keep this note ↗"
+                        ) }}
+
+                        <a
+                            class="editor-cancel"
+                            href="{{ url_for('notes.get_notes') }}"
+                        >
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

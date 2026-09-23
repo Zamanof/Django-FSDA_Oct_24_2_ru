@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ note.title }} · Delete{% endblock %}
+
+{% block content %}
+<section class="note-detail">
+    <div class="d-flex justify-content-between align-items-center gap-3">
+        <span class="micro-label section-label mb-0">
+            Archive / Delete entry
+        </span>
+        <span class="archive-stamp">№ {{ note.id }}</span>
+    </div>
+
+    <h1 class="detail-title">
+        Delete note<span class="accent">?</span>
+    </h1>
+
+    <div class="detail-rule" aria-hidden="true">
+        <span></span>
+        <span>×</span>
+    </div>
+
+    <div class="row g-4 g-lg-5">
+        <aside class="col-lg-3">
+            <div class="margin-note">
+                <span class="micro-label">Please note</span>
+                <p>
+                    This entry will be permanently deleted.
+                    This action cannot be undone.
+                </p>
+            </div>
+        </aside>
+
+        <div class="col-lg-9">
+            <div class="note-paper">
+                <div class="micro-label section-label">
+                    Entry to delete
+                </div>
+
+                <div class="note-summary">
+                    <h2>{{ note.title }}</h2>
+                    <p>
+                        Are you sure you want to delete this note
+                        from the archive?
+                    </p>
+                </div>
+
+                <form method="post" class="editor-actions">
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        <button type="submit" class="btn editor-save">
+                            Delete permanently ↗
+                        </button>
+
+                        <a
+                            href="{{ url_for('notes.note_detail', note_id=note.id) }}"
+                            class="editor-cancel"
+                        >
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
